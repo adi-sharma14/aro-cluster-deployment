@@ -56,12 +56,17 @@ Below tasks will be required to successfuly demonstrate the migration of Opensta
     * Create account with business email
     * Download the pull secrets and store it under `Variables` within terraform cloud workspace as `aro_pull_secret`
 
+7. Terraform Cloud account and configuration
+
+    * Set-up new workspace `arctiq_mission` and SCM [Repo](https://github.com/adi-sharma14/aro-cluster-deployment.git) path in Terraform cloud free account (business account for production setup)
+    * Create sensitive variables in Terraform cloud workspace. Complete variable list can be referred [HERE](https://github.com/adi-sharma14/aro-cluster-deployment/blob/main/vars_workspace.auto.tfvars)
+
 
 ### How to perform the changes
-1. Set-up new workspace `arctiq_mission` and SCM [Repo](https://github.com/adi-sharma14/arctiq_mission) path in Terraform cloud free account (business account for production setup)
-2. Create sensitive variables in Terraform cloud workspace. Other variables can be referred [HERE](https://github.com/adi-sharma14/arctiq_mission/blob/main/vars_workspace.auto.tfvars).
-3. Go to the workspace --> Click  `Actions` --> click `Start new plan`
-4. Review the plan carefully and Click `Confirm and Apply`
+1. Login to Terraform cloud, go to the workspace `arctiq_mission` --> Click  `Actions` --> click `Start new plan`
+2. Review the plan carefully and Click `Confirm and Apply`
+
+On SUCCESSFUL run, ARO cluster should be ready.
 
 ### How to access the cluster
 
@@ -71,7 +76,7 @@ Below tasks will be required to successfuly demonstrate the migration of Opensta
     az aro list-credentials --name $CLUSTER --resource-group $RESOURCEGROUP
     oc login
     ```
-    All Done !!!
+All Done !!!
 
 ## 2. Deploy ArgoCD and synchronize cluster configurations
 
