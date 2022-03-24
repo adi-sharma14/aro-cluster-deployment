@@ -1,6 +1,5 @@
 # The Terraform outputs for cluster configs
 
 output "aro-cluster" {
-  value = azurerm_template_deployment.azure-arocluster
-  sensitive = true
+  value = nonsensitive(azurerm_template_deployment.azure-arocluster)
 }
