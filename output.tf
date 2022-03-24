@@ -2,4 +2,5 @@
 
 output "aro-cluster" {
   value = azurerm_template_deployment.azure-arocluster
+  sensitive = true
 }
