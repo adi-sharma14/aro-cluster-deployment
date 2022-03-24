@@ -17,7 +17,16 @@ Below tasks will be required to successfuly demonstrate the migration of Opensta
     * Set-up new workspace `arctiq_mission` and SCM [Repo](https://github.com/adi-sharma14/aro-cluster-deployment.git) path in Terraform cloud free account (business account for production setup)
     * Create sensitive variables in Terraform cloud workspace. Complete variable list can be referred [HERE](https://github.com/adi-sharma14/aro-cluster-deployment/blob/main/vars_workspace.auto.tfvars)
 
-2. Available Resource Quota in the subscription
+2.  Register the resource providers. Execute below commands:
+    ```
+    az account set --subscription <SUBSCRIPTION ID>
+    az provider register -n Microsoft.RedHatOpenShift --wait
+    az provider register -n Microsoft.Compute --wait
+    az provider register -n Microsoft.Storage --wait
+    az provider register -n Microsoft.Authorization --wait
+    ```
+
+3. Available Resource Quota in the subscription
     *  Machines from Standard DSv3 SKU : 10
     *  Minimum cores : 40
     ```
@@ -27,25 +36,15 @@ Below tasks will be required to successfuly demonstrate the migration of Opensta
     az vm list-usage -l $LOCATION --query "[?contains(name.value, 'standardDSv3Family')]" -o table
     ```
 
-3.  Register the resource providers. Execute below commands:
-    ```
-    az account set --subscription <SUBSCRIPTION ID>
-    az provider register -n Microsoft.RedHatOpenShift --wait
-    az provider register -n Microsoft.Compute --wait
-    az provider register -n Microsoft.Storage --wait
-    az provider register -n Microsoft.Authorization --wait
-    ```
-
 4. Create service principal for terraform to create Azure resources.
     ```
-    scope=`az group show --name aro-rg --query id`
-    az ad sp create-for-rbac --role Contributor --name 'terraform' --scopes $scope
+    az ad sp create-for-rbac --role Contributor --name 'terraform'
     ```
     Retrieve the password and store it as  `tf_client_secret` in terraform cloud variables.
 
-5. Create service principal for cluster to interact with Azure.
+5. Create service principal for cluster to interact with Azure. Also Assign `Azure Red Hat OpenShift RP` `Network Contributor` access. 
     ```
-    az ad sp create-for-rbac --name 'aro-app-sp' --role Owner --scopes $scope
+    az ad sp create-for-rbac --name 'aro-app-sp' --role Owner
     ```
     Retrieve the password and store it as  `aro_aadClientSecret` in terraform cloud variables.
 
