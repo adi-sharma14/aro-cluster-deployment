@@ -1,4 +1,4 @@
-# aro-cluster-deployment
+# ARO Cluster Deployment
 
 
 Below tasks will be required to successfuly demonstrate the migration of Openstack application to ARO cluster.
